@@ -1,116 +1,134 @@
-const { createFFmpeg, fetchFile } = FFmpeg;
-const ffmpeg = createFFmpeg({
-    log: true,
-    corePath: 'https://unpkg.com/@ffmpeg/core@0.11.0/dist/ffmpeg-core.js',
-});
+document.addEventListener('DOMContentLoaded', () => {
+    const apiKeyInput = document.getElementById('api-key');
+    const saveKeyBtn = document.getElementById('save-key');
+    const setupSection = document.getElementById('setup-section');
+    const uploadSection = document.getElementById('upload-section');
+    const resultSection = document.getElementById('result-section');
+    const cameraInput = document.getElementById('camera-input');
+    const fileInput = document.getElementById('file-input');
+    const imagePreview = document.getElementById('image-preview');
+    const loading = document.getElementById('loading');
+    const analysisResult = document.getElementById('analysis-result');
+    const resetBtn = document.getElementById('reset-btn');
 
-document.addEventListener('DOMContentLoaded', async () => {
-    const videoUpload = document.getElementById('video-upload');
-    const videoGallery = document.getElementById('video-gallery');
-    const statusContainer = document.getElementById('status');
-    const statusText = document.getElementById('status-text');
-    const progressBar = document.getElementById('progress');
+    let geminiApiKey = localStorage.getItem('gemini_api_key');
 
-    let ffmpegLoaded = false;
-
-    // FFmpeg 로드 시작
-    async function loadFFmpeg() {
-        if (ffmpegLoaded) return;
-        statusContainer.style.display = 'block';
-        statusText.innerText = 'FFmpeg 라이브러리 로드 중...';
-        
-        try {
-            await ffmpeg.load();
-            ffmpegLoaded = true;
-            statusText.innerText = '준비 완료! 동영상을 선택해 주세요.';
-            setTimeout(() => {
-                if (!videoUpload.files.length) {
-                    statusContainer.style.display = 'none';
-                }
-            }, 2000);
-        } catch (error) {
-            console.error('FFmpeg load error:', error);
-            statusText.innerText = '라이브러리 로드 실패. 페이지를 새로고침해 주세요.';
-        }
+    // 초기 상태 설정
+    if (geminiApiKey) {
+        setupSection.classList.add('hidden');
+        uploadSection.classList.remove('hidden');
     }
 
-    loadFFmpeg();
-
-    videoUpload.addEventListener('change', async (event) => {
-        const file = event.target.files[0];
-        if (!file) return;
-
-        if (!ffmpegLoaded) {
-            await loadFFmpeg();
-        }
-
-        const inputName = 'input_' + file.name;
-        const outputName = 'output_shortform.mp4';
-
-        statusContainer.style.display = 'block';
-        statusText.innerText = '동영상 처리 중... 잠시만 기다려 주세요.';
-        progressBar.style.display = 'block';
-        progressBar.value = 0;
-
-        ffmpeg.setProgress(({ ratio }) => {
-            progressBar.value = ratio * 100;
-            statusText.innerText = `편집 중... (${Math.round(ratio * 100)}%)`;
-        });
-
-        try {
-            // FFmpeg 가상 파일 시스템에 파일 쓰기
-            await ffmpeg.writeFile(inputName, await fetchFile(file));
-
-            // 숏폼(9:16) 크롭 명령 실행
-            // 원본의 높이를 기준으로 가로를 9:16 비율로 자름 (중앙 정렬)
-            await ffmpeg.run(
-                '-i', inputName,
-                '-vf', "crop=ih*9/16:ih",
-                '-c:v', 'libx264',
-                '-preset', 'ultrafast',
-                '-crf', '28',
-                '-c:a', 'copy',
-                outputName
-            );
-
-            // 결과 읽기
-            const data = await ffmpeg.readFile(outputName);
-            const videoBlob = new Blob([data.buffer], { type: 'video/mp4' });
-            const videoUrl = URL.createObjectURL(videoBlob);
-
-            // 갤러리에 추가
-            addVideoToGallery(videoUrl, file.name);
-
-            statusText.innerText = '편집 완료!';
-            progressBar.style.display = 'none';
-            
-            // 임시 파일 삭제
-            await ffmpeg.deleteFile(inputName);
-            await ffmpeg.deleteFile(outputName);
-
-        } catch (error) {
-            console.error('Processing error:', error);
-            statusText.innerText = '처리 중 오류가 발생했습니다.';
+    // API 키 저장
+    saveKeyBtn.addEventListener('click', () => {
+        const key = apiKeyInput.value.trim();
+        if (key) {
+            localStorage.setItem('gemini_api_key', key);
+            geminiApiKey = key;
+            setupSection.classList.add('hidden');
+            uploadSection.classList.remove('hidden');
+            alert('API 키가 저장되었습니다.');
+        } else {
+            alert('올바른 API 키를 입력하세요.');
         }
     });
 
-    function addVideoToGallery(url, originalName) {
-        const container = document.createElement('div');
-        container.className = 'video-item';
+    // 이미지 파일 선택 이벤트
+    cameraInput.addEventListener('change', handleImageUpload);
+    fileInput.addEventListener('change', handleImageUpload);
 
-        const video = document.createElement('video');
-        video.src = url;
-        video.controls = true;
-        video.className = 'shortform-preview';
+    async function handleImageUpload(e) {
+        const file = e.target.files[0];
+        if (!file) return;
 
-        const downloadBtn = document.createElement('a');
-        downloadBtn.href = url;
-        downloadBtn.download = `shortform_${originalName}`;
-        downloadBtn.className = 'download-button';
-        downloadBtn.innerText = '다운로드';
+        // UI 전환
+        uploadSection.classList.add('hidden');
+        resultSection.classList.remove('hidden');
+        loading.classList.remove('hidden');
+        analysisResult.classList.add('hidden');
+        
+        // 미리보기 표시
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            imagePreview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
 
-        container.appendChild(video);
-        container.appendChild(downloadBtn);
-        videoGallery.prepend(container);
+        try {
+            const base64Image = await fileToBase64(file);
+            await analyzeFood(base64Image);
+        } catch (error) {
+            console.error(error);
+            alert('분석 중 오류가 발생했습니다.');
+            resetUI();
+        }
+    }
+
+    function fileToBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result.split(',')[1]);
+            reader.onerror = (error) => reject(error);
+        });
+    }
+
+    async function analyzeFood(base64Data) {
+        const prompt = "이 이미지에 있는 음식을 식별하고, 예상 칼로리와 간단한 영양 정보(탄수화물, 단백질, 지방), 그리고 건강한 섭취 팁을 한국어로 알려줘. JSON 형식이 아닌 친절한 설명 형식으로 작성해줘. 제목은 '### [음식 이름]' 형식으로 시작해줘.";
+        
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`;
+        
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                contents: [{
+                    parts: [
+                        { text: prompt },
+                        {
+                            inline_data: {
+                                mime_type: "image/jpeg",
+                                data: base64Data
+                            }
+                        }
+                    ]
+                }]
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error('API 호출 실패');
+        }
+
+        const data = await response.json();
+        const text = data.candidates[0].content.parts[0].text;
+        displayResult(text);
+    }
+
+    function displayResult(text) {
+        loading.classList.add('hidden');
+        analysisResult.classList.remove('hidden');
+        
+        // 마크다운 형태의 텍스트를 간단히 HTML로 변환하여 표시
+        const formattedText = text
+            .replace(/### (.*)\n/g, '<h2>$1</h2>')
+            .replace(/\n/g, '<br>');
+            
+        analysisResult.innerHTML = `
+            <div class="result-text">${formattedText}</div>
+        `;
+    }
+
+    resetBtn.addEventListener('click', resetUI);
+
+    function resetUI() {
+        resultSection.classList.add('hidden');
+        uploadSection.classList.remove('hidden');
+        cameraInput.value = '';
+        fileInput.value = '';
+        imagePreview.src = '';
+        analysisResult.innerHTML = '';
     }
 });

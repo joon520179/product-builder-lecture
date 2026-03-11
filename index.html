@@ -3,41 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>숏폼 메이커 - 동영상을 숏폼으로</title>
+    <title>푸드 렌즈 - 음식 칼로리 분석기</title>
     <link rel="stylesheet" href="style.css">
-    <!-- COI Service Worker for SharedArrayBuffer support on GitHub Pages -->
-    <script src="https://cdn.jsdelivr.net/gh/gzuidhof/coi-serviceworker@latest/coi-serviceworker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <h1>숏폼 메이커</h1>
-    </header>
-    <main>
-        <section class="upload-section">
-            <h2>동영상을 업로드하세요</h2>
-            <p>동영상을 업로드하면 자동으로 9:16 숏폼 비율로 편집해 드립니다.</p>
-            <div class="upload-container">
-                <input type="file" id="video-upload" accept="video/*">
-                <label for="video-upload" class="upload-button">파일 선택</label>
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-utensils"></i>
+                <h1>푸드 렌즈</h1>
             </div>
-            <div id="status" class="status-container" style="display: none;">
-                <div class="loader"></div>
-                <p id="status-text">FFmpeg 로딩 중...</p>
-                <progress id="progress" value="0" max="100" style="display: none;"></progress>
+            <p>사진을 찍으면 칼로리를 알려드려요!</p>
+        </header>
+
+        <main>
+            <div id="setup-section" class="card">
+                <h3><i class="fas fa-key"></i> Gemini API 설정</h3>
+                <p>서비스 이용을 위해 Gemini API 키가 필요합니다.</p>
+                <div class="input-group">
+                    <input type="password" id="api-key" placeholder="API 키를 입력하세요">
+                    <button id="save-key" class="btn primary">저장</button>
+                </div>
+                <small><a href="https://aistudio.google.com/app/apikey" target="_blank">키 발급받기 (무료)</a></small>
             </div>
-        </section>
-        <section class="gallery-section">
-            <h2>편집된 숏폼</h2>
-            <div id="video-gallery" class="video-gallery">
-                <!-- 숏폼 비디오가 여기에 표시됩니다. -->
-            </div>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2023 숏폼 메이커. All rights reserved.</p>
-    </footer>
-    <!-- FFmpeg.wasm -->
-    <script src="https://unpkg.com/@ffmpeg/ffmpeg@0.11.6/dist/ffmpeg.min.js"></script>
+
+            <section id="upload-section" class="card hidden">
+                <div class="button-grid">
+                    <label for="camera-input" class="btn-action">
+                        <i class="fas fa-camera"></i>
+                        <span>사진 촬영</span>
+                        <input type="file" id="camera-input" accept="image/*" capture="environment">
+                    </label>
+                    <label for="file-input" class="btn-action">
+                        <i class="fas fa-image"></i>
+                        <span>갤러리 선택</span>
+                        <input type="file" id="file-input" accept="image/*">
+                    </label>
+                </div>
+            </section>
+
+            <section id="result-section" class="card hidden">
+                <div class="preview-container">
+                    <img id="image-preview" src="" alt="음식 사진 미리보기">
+                </div>
+                <div id="loading" class="loading hidden">
+                    <div class="spinner"></div>
+                    <p>음식을 분석하는 중입니다...</p>
+                </div>
+                <div id="analysis-result" class="result-content hidden">
+                    <!-- 결과가 여기에 표시됩니다 -->
+                </div>
+                <button id="reset-btn" class="btn secondary">다시 찍기</button>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 푸드 렌즈. AI 기반 음식 분석 서비스.</p>
+        </footer>
+    </div>
     <script src="main.js"></script>
 </body>
 </html>

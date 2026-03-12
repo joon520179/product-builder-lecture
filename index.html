@@ -15,19 +15,30 @@
         </header>
 
         <main>
-            <div class="upload-section" id="upload-area">
+            <div class="mode-switch">
+                <button id="btn-mode-upload" class="btn-mode active">사진 업로드</button>
+                <button id="btn-mode-webcam" class="btn-mode">실시간 카메라</button>
+            </div>
+
+            <div id="upload-area" class="upload-section">
                 <div class="upload-icon">📸</div>
                 <p>얼굴 사진을 업로드하거나 드래그하세요</p>
                 <input type="file" id="image-upload" accept="image/*" hidden>
                 <button class="btn-upload" onclick="document.getElementById('image-upload').click()">사진 선택하기</button>
             </div>
 
+            <div id="webcam-area" style="display: none;">
+                <div id="webcam-container"></div>
+                <p class="webcam-hint">카메라를 정면으로 바라봐주세요</p>
+            </div>
+
             <div id="image-preview-container" style="display: none;">
                 <img id="image-preview" src="#" alt="미리보기">
-                <div id="loading" style="display: none;">
-                    <div class="spinner"></div>
-                    <p>AI가 분석 중입니다...</p>
-                </div>
+            </div>
+
+            <div id="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>AI가 분석 중입니다...</p>
             </div>
 
             <div id="result-container" style="display: none;">

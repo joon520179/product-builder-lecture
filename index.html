@@ -28,8 +28,12 @@
             </div>
 
             <div id="webcam-area" style="display: none;">
-                <div id="webcam-container"></div>
-                <p class="webcam-hint">카메라를 정면으로 바라봐주세요</p>
+                <div id="webcam-container" style="position: relative;">
+                    <div id="countdown-overlay" style="display: none;">3</div>
+                </div>
+                <p class="webcam-hint">카메라를 정면으로 바라보고 '분석 시작' 버튼을 누르세요</p>
+                <button id="btn-capture-start" class="btn-upload">분석 시작</button>
+                <button id="btn-webcam-retry" class="btn-retry" style="display: none;">다시 촬영하기</button>
             </div>
 
             <div id="image-preview-container" style="display: none;">

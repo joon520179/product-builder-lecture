@@ -3,86 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>푸드 렌즈 - 음식 칼로리 분석기</title>
+    <title>SJPL - 에스제이피엘 | 처음부터 끝까지, 제대로 만듭니다.</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="app-container">
-        <header>
+    <header id="navbar">
+        <div class="container">
             <div class="logo">
-                <i class="fas fa-utensils"></i>
-                <h1>푸드 렌즈</h1>
+                <a href="#hero">SJPL <span>KOREA</span></a>
             </div>
-            <p>사진을 찍으면 칼로리를 알려드려요!</p>
-        </header>
-
-        <main>
-            <div id="setup-section" class="card">
-                <h3><i class="fas fa-key"></i> Gemini API 설정</h3>
-                <p>서비스 이용을 위해 Gemini API 키가 필요합니다.</p>
-                <div class="input-group">
-                    <input type="password" id="api-key" placeholder="API 키를 입력하세요">
-                    <button id="save-key" class="btn primary">저장</button>
-                </div>
-                <small><a href="https://aistudio.google.com/app/apikey" target="_blank">키 발급받기 (무료)</a></small>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#about">회사소개</a></li>
+                    <li><a href="#products">사업영역</a></li>
+                    <li><a href="#strengths">기술력</a></li>
+                    <li><a href="#contact">고객문의</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-toggle">
+                <i class="fas fa-bars"></i>
             </div>
+        </div>
+    </header>
 
-            <section id="upload-section" class="card hidden">
-                <div class="button-grid">
-                    <label for="camera-input" class="btn-action">
-                        <i class="fas fa-camera"></i>
-                        <span>사진 촬영</span>
-                        <input type="file" id="camera-input" accept="image/*" capture="environment">
-                    </label>
-                    <label for="file-input" class="btn-action">
-                        <i class="fas fa-image"></i>
-                        <span>갤러리 선택</span>
-                        <input type="file" id="file-input" accept="image/*">
-                    </label>
-                </div>
-            </section>
+    <section id="hero">
+        <div class="hero-content">
+            <h1>MADE RIGHT.<br>FROM THE START.</h1>
+            <p>처음부터 끝까지, 제대로 만듭니다.</p>
+            <div class="hero-btns">
+                <a href="#products" class="btn primary">제품 보기</a>
+                <a href="#contact" class="btn secondary">견적 문의</a>
+            </div>
+        </div>
+    </section>
 
-            <section id="result-section" class="card hidden">
-                <div class="preview-container">
-                    <img id="image-preview" src="" alt="음식 사진 미리보기">
+    <section id="about" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>SJPL 소개</h2>
+                <div class="line"></div>
+            </div>
+            <div class="about-grid">
+                <div class="about-text">
+                    <h3>플라스틱 사출 전문 기업, 에스제이피엘</h3>
+                    <p>SJPL은 2017년 설립 이후, 축적된 기술력과 최신 설비를 바탕으로 건설, 화학, 식품 등 다양한 산업 분야에 고품질 플라스틱 용기를 공급하고 있습니다.</p>
+                    <p>경기도 평택시에 위치한 본사 및 공장은 생산부터 출고까지 최적의 프로세스를 갖추고 고객의 가치를 최우선으로 생각합니다.</p>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="number">2017</span>
+                            <span class="label">설립연도</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="number">100+</span>
+                            <span class="label">파트너 기업</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="number">100%</span>
+                            <span class="label">품질 보증</span>
+                        </div>
+                    </div>
                 </div>
-                <div id="loading" class="loading hidden">
-                    <div class="spinner"></div>
-                    <p>음식을 분석하는 중입니다...</p>
+                <div class="about-img">
+                    <div class="img-placeholder">
+                        <i class="fas fa-industry"></i>
+                        <span>공장 및 전경 이미지 예정</span>
+                    </div>
                 </div>
-                <div id="analysis-result" class="result-content hidden">
-                    <!-- 결과가 여기에 표시됩니다 -->
-                </div>
-                <button id="reset-btn" class="btn secondary">다시 찍기</button>
-            </section>
+            </div>
+        </div>
+    </section>
 
-            <!-- 제휴 문의 섹션 추가 -->
-            <section id="contact-section" class="card">
-                <h3><i class="fas fa-envelope"></i> 제휴 문의</h3>
-                <p>비즈니스 협업 및 제휴 문의는 아래 폼을 이용해 주세요.</p>
-                <form action="https://formspree.io/f/xlgpbrjq" method="POST" class="contact-form">
-                    <div class="form-group">
-                        <label for="full-name">성함/기업명</label>
-                        <input type="text" name="name" id="full-name" placeholder="홍길동" required>
+    <section id="products" class="section bg-light">
+        <div class="container">
+            <div class="section-header">
+                <h2>사업영역</h2>
+                <p>다양한 산업 분야에 최적화된 고품질 용기를 제안합니다.</p>
+                <div class="line"></div>
+            </div>
+            <div class="product-grid">
+                <div class="product-card">
+                    <div class="product-icon"><i class="fas fa-hard-hat"></i></div>
+                    <h3>건설 산업용</h3>
+                    <p>내구성이 뛰어난 페인트 및 코팅제 전용 용기</p>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon"><i class="fas fa-flask"></i></div>
+                    <h3>화학 산업용</h3>
+                    <p>내화학성 테스트를 거친 안전한 약품 용기</p>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon"><i class="fas fa-utensils"></i></div>
+                    <h3>식품 산업용</h3>
+                    <p>식품 등급 원료를 사용한 위생적인 대용량 용기</p>
+                </div>
+                <div class="product-card">
+                    <div class="product-icon"><i class="fas fa-cogs"></i></div>
+                    <h3>정밀 사출물</h3>
+                    <p>고객 요구 사양에 맞춘 커스텀 정밀 사출 부품</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="strengths" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>왜 SJPL인가?</h2>
+                <div class="line"></div>
+            </div>
+            <div class="strengths-grid">
+                <div class="strength-item">
+                    <i class="fas fa-check-circle"></i>
+                    <h4>첨단 사출 설비</h4>
+                    <p>정밀한 생산을 위해 최신 자동화 사출기를 보유하고 있습니다.</p>
+                </div>
+                <div class="strength-item">
+                    <i class="fas fa-microscope"></i>
+                    <h4>철저한 품질 관리</h4>
+                    <p>출고 전 엄격한 검수를 통해 불량률 제로에 도전합니다.</p>
+                </div>
+                <div class="strength-item">
+                    <i class="fas fa-user-friends"></i>
+                    <h4>고객 맞춤 컨설팅</h4>
+                    <p>금형 설계부터 대량 생산까지 최적의 솔루션을 제공합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section bg-dark">
+        <div class="container">
+            <div class="section-header white">
+                <h2>고객 문의</h2>
+                <p>프로젝트 상담이나 견적 문의가 필요하시면 아래 폼을 작성해 주세요.</p>
+                <div class="line"></div>
+            </div>
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4>본사 및 공장</h4>
+                            <p>경기도 평택시 드림산업단지</p>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="email-address">이메일 주소</label>
-                        <input type="email" name="_replyto" id="email-address" placeholder="example@email.com" required>
+                    <div class="info-item">
+                        <i class="fas fa-phone-alt"></i>
+                        <div>
+                            <h4>전화번호</h4>
+                            <p>031-682-5070</p>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="message">문의 내용</label>
-                        <textarea name="message" id="message" rows="4" placeholder="문의하실 내용을 입력해 주세요" required></textarea>
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>이메일</h4>
+                            <p>admin@sjplkorea.com</p>
+                        </div>
                     </div>
+                </div>
+                <form action="https://formspree.io/f/xlgpbrjq" method="POST" class="contact-form-main">
+                    <div class="form-row">
+                        <input type="text" name="name" placeholder="성함 / 기업명" required>
+                        <input type="email" name="_replyto" placeholder="이메일 주소" required>
+                    </div>
+                    <input type="text" name="subject" placeholder="문의 제목" required>
+                    <textarea name="message" rows="5" placeholder="문의하실 내용을 입력해 주세요" required></textarea>
                     <button type="submit" class="btn primary full-width">문의 보내기</button>
                 </form>
-            </section>
-        </main>
+            </div>
+        </div>
+    </section>
 
-        <footer>
-            <p>&copy; 2024 푸드 렌즈. AI 기반 음식 분석 서비스.</p>
-        </footer>
-    </div>
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    SJPL <span>KOREA</span>
+                </div>
+                <p>&copy; 2024 SJPL Co., Ltd. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
     <script src="main.js"></script>
 </body>
 </html>

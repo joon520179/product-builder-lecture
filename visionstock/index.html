@@ -1,13 +1,67 @@
 <!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>VisionStock - AI Inventory</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 동물상 테스트 - 강아지 vs 고양이</title>
+    <!-- Google AdSense -->
+    <meta name="google-adsense-account" content="ca-pub-7343718532451880">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7343718532451880"
+     crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI 동물상 테스트</h1>
+            <p class="subtitle">나는 강아지상일까, 고양이상일까?</p>
+        </header>
+
+        <main>
+            <div id="webcam-area">
+                <div id="webcam-container" style="position: relative;">
+                    <div id="countdown-overlay" style="display: none;">3</div>
+                </div>
+                <p class="webcam-hint">카메라를 정면으로 바라보고 '분석 시작' 버튼을 누르세요</p>
+                <div class="control-buttons">
+                    <button id="btn-capture-start" class="btn-action">분석 시작</button>
+                    <button id="btn-webcam-retry" class="btn-retry" style="display: none;">다시 촬영하기</button>
+                </div>
+            </div>
+
+            <div id="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>AI가 분석 중입니다...</p>
+            </div>
+
+            <div id="result-container" style="display: none;">
+                <h2 id="result-title">당신은 강아지상입니다!</h2>
+                <div class="result-bar-container">
+                    <div class="result-label">강아지</div>
+                    <div class="progress-bar">
+                        <div id="dog-bar" class="progress-fill dog-color" style="width: 0%;"></div>
+                    </div>
+                    <div id="dog-percent" class="result-percent">0%</div>
+                </div>
+                <div class="result-bar-container">
+                    <div class="result-label">고양이</div>
+                    <div class="progress-bar">
+                        <div id="cat-bar" class="progress-fill cat-color" style="width: 0%;"></div>
+                    </div>
+                    <div id="cat-percent" class="result-percent">0%</div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 AI Animal Face Test. Powered by Teachable Machine</p>
+        </footer>
+    </div>
+
+    <!-- TensorFlow.js and Teachable Machine Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <script src="../main.js"></script>
+</body>
 </html>

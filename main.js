@@ -1,19 +1,12 @@
 const URL = "https://teachablemachine.withgoogle.com/models/otKuKorme/";
 
 let model, webcam, maxPredictions;
-let isWebcamMode = false;
 let isCaptured = false;
 
 // Elements
-const imageUpload = document.getElementById("image-upload");
-const imagePreview = document.getElementById("image-preview");
-const imagePreviewContainer = document.getElementById("image-preview-container");
-const uploadArea = document.getElementById("upload-area");
-const webcamArea = document.getElementById("webcam-area");
+const webcamContainer = document.getElementById("webcam-container");
 const loading = document.getElementById("loading");
 const resultContainer = document.getElementById("result-container");
-const btnModeUpload = document.getElementById("btn-mode-upload");
-const btnModeWebcam = document.getElementById("btn-mode-webcam");
 const btnCaptureStart = document.getElementById("btn-capture-start");
 const btnWebcamRetry = document.getElementById("btn-webcam-retry");
 const countdownOverlay = document.getElementById("countdown-overlay");
@@ -32,85 +25,55 @@ async function initModel() {
     }
 }
 
-// Mode Switching
-btnModeUpload.addEventListener("click", () => {
-    isWebcamMode = false;
-    btnModeUpload.classList.add("active");
-    btnModeWebcam.classList.remove("active");
-    uploadArea.style.display = "block";
-    webcamArea.style.display = "none";
-    imagePreviewContainer.style.display = "none";
-    resultContainer.style.display = "none";
-    if (webcam) {
-        webcam.stop();
-        const container = document.getElementById("webcam-container");
-        if (container.querySelector('canvas')) container.removeChild(container.querySelector('canvas'));
-    }
-});
-
-btnModeWebcam.addEventListener("click", async () => {
-    isWebcamMode = true;
-    isCaptured = false;
-    btnModeWebcam.classList.add("active");
-    btnModeUpload.classList.remove("active");
-    uploadArea.style.display = "none";
-    webcamArea.style.display = "block";
-    btnCaptureStart.style.display = "inline-block";
-    btnWebcamRetry.style.display = "none";
-    imagePreviewContainer.style.display = "none";
-    resultContainer.style.display = "none";
-    
-    await setupWebcam();
-});
-
-// Setup Webcam
+// Setup and Start Webcam
 async function setupWebcam() {
     loading.style.display = "block";
+    btnCaptureStart.style.display = "none";
+    
     await initModel();
     
     try {
         const flip = true;
-        webcam = new tmImage.Webcam(300, 300, flip);
+        webcam = new tmImage.Webcam(320, 320, flip);
         await webcam.setup();
         await webcam.play();
         
-        const container = document.getElementById("webcam-container");
-        // Clear previous canvas if any
-        const oldCanvas = container.querySelector('canvas');
-        if (oldCanvas) container.removeChild(oldCanvas);
+        webcamContainer.innerHTML = `<div id="countdown-overlay" style="display: none;">3</div>`;
+        webcamContainer.appendChild(webcam.canvas);
         
-        container.appendChild(webcam.canvas);
         loading.style.display = "none";
+        btnCaptureStart.style.display = "inline-block";
         
         window.requestAnimationFrame(webcamLoop);
     } catch (error) {
         console.error("카메라 설정 실패:", error);
-        alert("카메라를 사용할 수 없습니다.");
+        alert("카메라를 사용할 수 없습니다. 권한을 확인해주세요.");
         loading.style.display = "none";
     }
 }
 
 async function webcamLoop() {
-    if (!isWebcamMode || isCaptured) return;
+    if (isCaptured) return;
     webcam.update();
     window.requestAnimationFrame(webcamLoop);
 }
 
 // Countdown and Capture Logic
-btnCaptureStart.addEventListener("click", async () => {
+btnCaptureStart.addEventListener("click", () => {
     btnCaptureStart.style.display = "none";
-    countdownOverlay.style.display = "block";
+    const overlay = document.getElementById("countdown-overlay");
+    overlay.style.display = "block";
     
     let count = 3;
-    countdownOverlay.innerText = count;
+    overlay.innerText = count;
     
     const interval = setInterval(() => {
         count--;
         if (count > 0) {
-            countdownOverlay.innerText = count;
+            overlay.innerText = count;
         } else {
             clearInterval(interval);
-            countdownOverlay.style.display = "none";
+            overlay.style.display = "none";
             captureAndPredict();
         }
     }, 1000);
@@ -127,35 +90,17 @@ async function captureAndPredict() {
     btnWebcamRetry.style.display = "inline-block";
 }
 
+// Retry Logic
 btnWebcamRetry.addEventListener("click", async () => {
     isCaptured = false;
     resultContainer.style.display = "none";
     btnWebcamRetry.style.display = "none";
-    btnCaptureStart.style.display = "inline-block";
+    
+    // Reset progress bars
+    document.getElementById("dog-bar").style.width = "0%";
+    document.getElementById("cat-bar").style.width = "0%";
+    
     await setupWebcam();
-});
-
-// Handle Image Upload
-imageUpload.addEventListener("change", async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = async (event) => {
-        imagePreview.src = event.target.result;
-        imagePreviewContainer.style.display = "block";
-        uploadArea.style.display = "none";
-        loading.style.display = "block";
-        resultContainer.style.display = "none";
-
-        imagePreview.onload = async () => {
-            await initModel();
-            await predict(imagePreview);
-            loading.style.display = "none";
-            resultContainer.style.display = "block";
-        };
-    };
-    reader.readAsDataURL(file);
 });
 
 // Prediction Logic
@@ -186,4 +131,5 @@ async function predict(inputElement) {
     });
 }
 
-initModel();
+// Start app on load
+setupWebcam();

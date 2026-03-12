@@ -15,29 +15,15 @@
         </header>
 
         <main>
-            <div class="mode-switch">
-                <button id="btn-mode-upload" class="btn-mode active">사진 업로드</button>
-                <button id="btn-mode-webcam" class="btn-mode">실시간 카메라</button>
-            </div>
-
-            <div id="upload-area" class="upload-section">
-                <div class="upload-icon">📸</div>
-                <p>얼굴 사진을 업로드하거나 드래그하세요</p>
-                <input type="file" id="image-upload" accept="image/*" hidden>
-                <button class="btn-upload" onclick="document.getElementById('image-upload').click()">사진 선택하기</button>
-            </div>
-
-            <div id="webcam-area" style="display: none;">
+            <div id="webcam-area">
                 <div id="webcam-container" style="position: relative;">
                     <div id="countdown-overlay" style="display: none;">3</div>
                 </div>
                 <p class="webcam-hint">카메라를 정면으로 바라보고 '분석 시작' 버튼을 누르세요</p>
-                <button id="btn-capture-start" class="btn-upload">분석 시작</button>
-                <button id="btn-webcam-retry" class="btn-retry" style="display: none;">다시 촬영하기</button>
-            </div>
-
-            <div id="image-preview-container" style="display: none;">
-                <img id="image-preview" src="#" alt="미리보기">
+                <div class="control-buttons">
+                    <button id="btn-capture-start" class="btn-action">분석 시작</button>
+                    <button id="btn-webcam-retry" class="btn-retry" style="display: none;">다시 촬영하기</button>
+                </div>
             </div>
 
             <div id="loading" style="display: none;">
@@ -61,7 +47,6 @@
                     </div>
                     <div id="cat-percent" class="result-percent">0%</div>
                 </div>
-                <button class="btn-retry" onclick="location.reload()">다시 하기</button>
             </div>
         </main>
 

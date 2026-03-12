@@ -1,65 +1,80 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const navbar = document.getElementById('navbar');
-    const mobileToggle = document.querySelector('.mobile-toggle');
-    const navLinks = document.querySelector('.nav-links');
+const URL = "https://teachablemachine.withgoogle.com/models/otKuKorme/";
 
-    // 스크롤 시 내비게이션 바 스타일 변경
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
+let model, labelContainer, maxPredictions;
+
+// Load the image model
+async function init() {
+    const modelURL = URL + "model.json";
+    const metadataURL = URL + "metadata.json";
+
+    model = await tmImage.load(modelURL, metadataURL);
+    maxPredictions = model.getTotalClasses();
+    console.log("모델 로드 완료");
+}
+
+// Handle image upload and prediction
+const imageUpload = document.getElementById("image-upload");
+const imagePreview = document.getElementById("image-preview");
+const imagePreviewContainer = document.getElementById("image-preview-container");
+const uploadArea = document.getElementById("upload-area");
+const loading = document.getElementById("loading");
+const resultContainer = document.getElementById("result-container");
+
+imageUpload.addEventListener("change", async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Show preview
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+        imagePreview.src = event.target.result;
+        imagePreviewContainer.style.display = "block";
+        uploadArea.style.display = "none";
+        loading.style.display = "block";
+        resultContainer.style.display = "none";
+
+        // Wait for image to load before predicting
+        imagePreview.onload = async () => {
+            await predict();
+            loading.style.display = "none";
+            resultContainer.style.display = "block";
+        };
+    };
+    reader.readAsDataURL(file);
+});
+
+// Run prediction on the image
+async function predict() {
+    if (!model) await init();
+
+    const prediction = await model.predict(imagePreview);
+    
+    // Sort predictions to find the top result
+    prediction.sort((a, b) => b.probability - a.probability);
+    
+    const topResult = prediction[0];
+    const resultTitle = document.getElementById("result-title");
+    
+    if (topResult.className === "강아지") {
+        resultTitle.innerText = `당신은 귀여운 강아지상입니다! 🐶`;
+    } else if (topResult.className === "고양이") {
+        resultTitle.innerText = `당신은 시크한 고양이상입니다! 🐱`;
+    } else {
+        resultTitle.innerText = `당신은 ${topResult.className}상입니다! ✨`;
+    }
+
+    // Update Progress Bars
+    prediction.forEach(p => {
+        const percent = (p.probability * 100).toFixed(0);
+        if (p.className === "강아지") {
+            document.getElementById("dog-bar").style.width = percent + "%";
+            document.getElementById("dog-percent").innerText = percent + "%";
+        } else if (p.className === "고양이") {
+            document.getElementById("cat-bar").style.width = percent + "%";
+            document.getElementById("cat-percent").innerText = percent + "%";
         }
     });
+}
 
-    // 모바일 메뉴 토글
-    mobileToggle.addEventListener('click', () => {
-        navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-        navLinks.style.flexDirection = 'column';
-        navLinks.style.position = 'absolute';
-        navLinks.style.top = '100%';
-        navLinks.style.left = '0';
-        navLinks.style.width = '100%';
-        navLinks.style.backgroundColor = 'white';
-        navLinks.style.padding = '20px';
-        navLinks.style.boxShadow = '0 5px 10px rgba(0,0,0,0.1)';
-        
-        // 링크 클릭 시 메뉴 닫기 (모바일)
-        const links = navLinks.querySelectorAll('a');
-        links.forEach(link => {
-            link.style.color = '#333';
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 768) {
-                    navLinks.style.display = 'none';
-                }
-            });
-        });
-    });
-
-    // 부드러운 스크롤 이동
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                const headerOffset = 80;
-                const elementPosition = target.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                window.scrollTo({
-                    top: offsetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
-    });
-
-    // 폼 제출 시 간단한 알림 (Formspree가 실제 처리를 담당하지만 사용자 경험을 위해 추가)
-    const contactForm = document.querySelector('.contact-form-main');
-    if (contactForm) {
-        contactForm.addEventListener('submit', () => {
-            // 실제 제출은 action URL로 진행되므로 여기서는 간단한 UI 피드백만 고려 가능
-            // Formspree의 기본 성공 페이지로 이동하게 됨
-        });
-    }
-});
+// Initialize on page load
+init();

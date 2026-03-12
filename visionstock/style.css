@@ -23,6 +23,15 @@ body {
 /* Header & Nav */
 header { text-align: center; margin-bottom: 4rem; }
 .top-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; }
+.nav-right { display: flex; align-items: center; gap: 1rem; }
+.lang-select { 
+    padding: 0.3rem 0.5rem; 
+    border-radius: 8px; 
+    border: 1px solid #e2e8f0; 
+    font-size: 0.85rem; 
+    background: white;
+    cursor: pointer;
+}
 .logo { font-size: 1.5rem; font-weight: 900; color: var(--primary-color); text-decoration: none; }
 .nav-links a { margin-left: 1.5rem; text-decoration: none; color: var(--text-sub); font-weight: 500; font-size: 0.95rem; }
 .nav-links a:hover { color: var(--primary-color); }

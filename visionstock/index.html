@@ -3,11 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI 동물상 테스트 - 인공지능이 알려주는 나의 닮은 동물상</title>
-    
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="인공지능이 당신의 얼굴 특징을 분석하여 가장 닮은 동물상을 찾아드립니다. 사진은 서버에 저장되지 않아 안전합니다.">
-    <meta name="keywords" content="동물상 테스트, AI 동물상, 관상 테스트, 강아지상 고양이상, 인공지능 테스트, 얼굴 분석">
+    <title>심쿵! AI 동물상 테스트 - 멍냥이 판독기 🐾</title>
+    <meta name="description" content="인공지능이 알려주는 나의 숨겨진 동물 매력! 강아지상일까, 고양이상일까? 지금 바로 확인해보세요! ✨">
     
     <!-- Google AdSense -->
     <meta name="google-adsense-account" content="ca-pub-7343718532451880">
@@ -15,95 +12,95 @@
      crossorigin="anonymous"></script>
     
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="bg-decoration">
+        <span class="bubble b1">🐾</span><span class="bubble b2">✨</span><span class="bubble b3">💖</span><span class="bubble b4">🍭</span>
+    </div>
+
     <div class="container">
         <header>
             <nav class="top-nav">
-                <a href="/" class="logo">AnimalFace AI</a>
+                <a href="/" class="logo">🐾 AnimalFace AI</a>
                 <div class="nav-right">
                     <select id="lang-select" class="lang-select">
-                        <option value="ko">한국어</option>
-                        <option value="en">English</option>
-                        <option value="ja">日本語</option>
-                        <option value="zh">简体中文</option>
+                        <option value="ko">🇰🇷 한국어</option>
+                        <option value="en">🇺🇸 English</option>
+                        <option value="ja">🇯🇵 日本語</option>
+                        <option value="zh">🇨🇳 简体中文</option>
                     </select>
-                    <div class="nav-links">
-                        <a href="#how-to" data-i18n="nav-how-to">사용법</a>
-                        <a href="#faq" data-i18n="nav-faq">FAQ</a>
-                    </div>
                 </div>
             </nav>
-            <h1 data-i18n="main-title">AI 동물상 테스트</h1>
-            <p class="subtitle" data-i18n="main-subtitle">나의 얼굴은 어떤 동물의 매력을 가졌을까요?</p>
+            <div class="header-main">
+                <h1 data-i18n="main-title">AI 동물상 테스트</h1>
+                <p class="subtitle" data-i18n="main-subtitle">나는 어떤 멍냥이와 닮았을까? 🐶🐱</p>
+            </div>
         </header>
 
         <main>
-            <section class="tool-section card">
+            <!-- 메인 카드 -->
+            <section class="tool-card">
                 <div id="webcam-area">
-                    <div id="webcam-container">
-                        <div id="countdown-overlay" style="display: none;">3</div>
+                    <div class="webcam-frame">
+                        <div id="webcam-container">
+                            <div id="countdown-overlay" style="display: none;">3</div>
+                        </div>
                     </div>
-                    <div class="security-badge">
-                        <span data-i18n="security-msg">🛡️ 개인정보 보호: 사진은 서버로 전송되지 않습니다.</span>
-                    </div>
+                    <p class="webcam-hint" data-i18n="security-msg">🛡️ 사진은 서버에 저장되지 않으니 안심하세요!</p>
                     <div class="control-buttons">
-                        <button id="btn-capture-start" class="btn-action" data-i18n="btn-start">테스트 시작하기</button>
-                        <button id="btn-webcam-retry" class="btn-retry" style="display: none;" data-i18n="btn-retry">다시 하기</button>
+                        <button id="btn-capture-start" class="btn-main pulse" data-i18n="btn-start">두근두근 분석 시작! ✨</button>
+                        <button id="btn-webcam-retry" class="btn-sub" style="display: none;" data-i18n="btn-retry">한 번 더 해볼래! 🐾</button>
                     </div>
                 </div>
 
                 <div id="loading" style="display: none;">
-                    <div class="spinner"></div>
-                    <p data-i18n="loading-msg">AI가 당신의 관상을 정밀 분석 중입니다...</p>
+                    <div class="loading-animation">🐶...🐱...🐭</div>
+                    <p data-i18n="loading-msg">AI 친구들이 열심히 분석 중이에요!</p>
                 </div>
 
-                <div id="result-container" style="display: none;">
+                <!-- 분석 결과 카드 -->
+                <div id="result-container" style="display: none;" class="result-card">
                     <div class="result-header">
-                        <h2 data-i18n="result-title">분석 결과</h2>
-                        <div id="result-description" class="result-desc"></div>
+                        <div class="result-badge">Perfect Match! 💖</div>
+                        <h2 id="result-title">당신은 99% 강아지!</h2>
                     </div>
-                    <div class="result-charts">
-                        <div class="result-bar-container">
-                            <div class="result-label" data-i18n="animal-dog">강아지상</div>
-                            <div class="progress-bar"><div id="dog-bar" class="progress-fill dog-color"></div></div>
-                            <div id="dog-percent" class="result-percent">0%</div>
+                    
+                    <div class="result-body">
+                        <div class="result-desc-box">
+                            <p id="result-description">정말 귀여운 강아지상이시네요!</p>
                         </div>
-                        <div class="result-bar-container">
-                            <div class="result-label" data-i18n="animal-cat">고양이상</div>
-                            <div class="progress-bar"><div id="cat-bar" class="progress-fill cat-color"></div></div>
-                            <div id="cat-percent" class="result-percent">0%</div>
+                        
+                        <div class="feature-analysis">
+                            <h3 data-i18n="feature-analysis-title">✨ 왜 그렇게 생겼을까? (관상 분석)</h3>
+                            <ul id="feature-list" class="feature-list">
+                                <!-- JS로 분석 특징 삽입 -->
+                            </ul>
+                        </div>
+
+                        <div class="percentage-grid">
+                            <div class="percent-item dog">
+                                <span class="p-label">🐶 Doggy</span>
+                                <div class="p-bar-bg"><div id="dog-bar" class="p-bar-fill"></div></div>
+                                <span id="dog-percent" class="p-val">0%</span>
+                            </div>
+                            <div class="percent-item cat">
+                                <span class="p-label">🐱 Kitty</span>
+                                <div class="p-bar-bg"><div id="cat-bar" class="p-bar-fill"></div></div>
+                                <span id="cat-percent" class="p-val">0%</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <section id="how-to" class="info-section">
-                <h3 data-i18n="how-to-title">테스트 이용 방법</h3>
-                <div class="step-grid">
-                    <div class="step-item">
-                        <div class="step-num">1</div>
-                        <p data-i18n="step-1">카메라 권한을 허용하고 얼굴이 잘 보이도록 조절하세요.</p>
-                    </div>
-                    <div class="step-item">
-                        <div class="step-num">2</div>
-                        <p data-i18n="step-2">'테스트 시작' 버튼을 누르고 3초간 기다려주세요.</p>
-                    </div>
-                    <div class="step-item">
-                        <div class="step-num">3</div>
-                        <p data-i18n="step-3">AI가 분석한 나의 동물상과 상세 특징을 확인하세요.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="faq" class="faq-section">
-                <h3 data-i18n="faq-title">자주 묻는 질문 (FAQ)</h3>
-                <div class="faq-list">
-                    <div class="faq-item">
-                        <h4 data-i18n="faq-q1">Q. 사진이 서버에 저장되나요?</h4>
-                        <p data-i18n="faq-a1">A. 아니요! 모든 분석은 사용자의 브라우저 내에서 처리되며 사진은 어디로도 전송되지 않습니다.</p>
-                    </div>
+            <!-- 정보 섹션 -->
+            <section class="guide-section">
+                <h3 data-i18n="how-to-title">🐾 어떻게 하는 건가요?</h3>
+                <div class="guide-steps">
+                    <div class="step">📸 카메라 앞에 예쁘게 앉기</div>
+                    <div class="step">👇 분석 시작 버튼 누르기</div>
+                    <div class="step">✨ 3초만 예쁜 표정 짓기</div>
                 </div>
             </section>
         </main>
@@ -111,9 +108,8 @@
         <footer>
             <div class="footer-links">
                 <a href="/privacy.html" data-i18n="footer-privacy">개인정보처리방침</a>
-                <a href="#" data-i18n="footer-terms">이용약관</a>
             </div>
-            <p class="copyright">&copy; 2024 AnimalFace AI. Powered by TensorFlow.js</p>
+            <p class="copyright">© 2024 AnimalFace AI. All rights reserved. 💖</p>
         </footer>
     </div>
 

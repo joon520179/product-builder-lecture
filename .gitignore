@@ -1,0 +1,8 @@
+node_modules/
+visionstock/node_modules/
+dist/
+visionstock/dist/
+.DS_Store
+firebase-debug.log
+.wrangler/
+visionstock/.wrangler/

@@ -1,0 +1,36 @@
+{
+  "name": "visionstock",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "deploy": "npm run build && wrangler pages deploy dist --project-name=visionstock"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "lucide-react": "^0.300.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0",
+    "wrangler": "^3.0.0"
+  }
+}
+
+    "lucide-react": "^0.577.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.9.3",
+    "vite": "^7.3.1",
+    "wrangler": "^4.72.0"
+  }
+}

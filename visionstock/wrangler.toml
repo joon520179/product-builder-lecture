@@ -1,0 +1,14 @@
+name = "visionstock"
+pages_build_output_dir = "dist"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "visionstock-db"
+database_id = "placeholder-id" # 배포 시 실제 ID로 교체 필요
+
+[[vectorize]]
+binding = "VECTOR_INDEX"
+index_name = "inventory-index"
+
+[ai]
+binding = "AI"

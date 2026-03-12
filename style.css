@@ -215,6 +215,40 @@ input:focus {
     margin: 10px 0;
 }
 
+/* Contact Form */
+.contact-form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: var(--text-color);
+}
+
+.form-group input, .form-group textarea {
+    padding: 12px;
+    border: 2px solid #ecf0f1;
+    border-radius: 10px;
+    outline: none;
+    font-family: inherit;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    border-color: var(--primary-color);
+}
+
+.btn.full-width {
+    width: 100%;
+}
+
 footer {
     text-align: center;
     font-size: 0.8rem;

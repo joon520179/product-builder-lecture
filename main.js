@@ -46,6 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
         resultSection.classList.remove('hidden');
         loading.classList.remove('hidden');
         analysisResult.classList.add('hidden');
+        analysisResult.innerHTML = '';
         
         // 미리보기 표시
         const reader = new FileReader();
@@ -55,27 +56,67 @@ document.addEventListener('DOMContentLoaded', () => {
         reader.readAsDataURL(file);
 
         try {
-            const base64Image = await fileToBase64(file);
-            await analyzeFood(base64Image);
+            // 이미지 최적화 (크기 줄이기)
+            const optimizedImage = await optimizeImage(file);
+            await analyzeFood(optimizedImage.base64, optimizedImage.type);
         } catch (error) {
-            console.error(error);
-            alert('분석 중 오류가 발생했습니다.');
-            resetUI();
+            console.error('Error:', error);
+            loading.classList.add('hidden');
+            analysisResult.classList.remove('hidden');
+            analysisResult.innerHTML = `<p style="color: #e74c3c;">오류 발생: ${error.message}</p>`;
         }
     }
 
-    function fileToBase64(file) {
-        return new Promise((resolve, reject) => {
+    // 이미지 리사이징 및 Base64 변환
+    function optimizeImage(file) {
+        return new Promise((resolve) => {
             const reader = new FileReader();
             reader.readAsDataURL(file);
-            reader.onload = () => resolve(reader.result.split(',')[1]);
-            reader.onerror = (error) => reject(error);
+            reader.onload = (event) => {
+                const img = new Image();
+                img.src = event.target.result;
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    let width = img.width;
+                    let height = img.height;
+
+                    // 최대 가로/세로 800px로 제한하여 API 부하 감소
+                    const max_size = 800;
+                    if (width > height) {
+                        if (width > max_size) {
+                            height *= max_size / width;
+                            width = max_size;
+                        }
+                    } else {
+                        if (height > max_size) {
+                            width *= max_size / height;
+                            height = max_size;
+                        }
+                    }
+
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+                    resolve({
+                        base64: dataUrl.split(',')[1],
+                        type: 'image/jpeg'
+                    });
+                };
+            };
         });
     }
 
-    async function analyzeFood(base64Data) {
-        const prompt = "이 이미지에 있는 음식을 식별하고, 예상 칼로리와 간단한 영양 정보(탄수화물, 단백질, 지방), 그리고 건강한 섭취 팁을 한국어로 알려줘. JSON 형식이 아닌 친절한 설명 형식으로 작성해줘. 제목은 '### [음식 이름]' 형식으로 시작해줘.";
+    async function analyzeFood(base64Data, mimeType) {
+        if (!geminiApiKey) {
+            throw new Error('API 키가 설정되지 않았습니다.');
+        }
+
+        const prompt = "이 이미지의 음식을 분석해서 다음 정보를 한국어로 알려줘:\n1. 음식 이름\n2. 예상 칼로리 (1인분 기준)\n3. 주요 영양소 (탄수화물, 단백질, 지방 등)\n4. 건강하게 먹는 팁\n\n결과는 보기 좋게 문단으로 나누어서 제목은 '### [음식 이름]'으로 시작해줘.";
         
+        // 모델을 gemini-1.5-flash로 고정하여 안정성 확보
         const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`;
         
         const response = await fetch(url, {
@@ -89,7 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         { text: prompt },
                         {
                             inline_data: {
-                                mime_type: "image/jpeg",
+                                mime_type: mimeType,
                                 data: base64Data
                             }
                         }
@@ -98,12 +139,18 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         });
 
+        const resultData = await response.json();
+
         if (!response.ok) {
-            throw new Error('API 호출 실패');
+            const errorMsg = resultData.error ? resultData.error.message : '알 수 없는 API 오류';
+            throw new Error(`API 오류: ${errorMsg}`);
         }
 
-        const data = await response.json();
-        const text = data.candidates[0].content.parts[0].text;
+        if (!resultData.candidates || resultData.candidates.length === 0) {
+            throw new Error('음식을 분석할 수 없습니다. 다른 사진으로 시도해 주세요.');
+        }
+
+        const text = resultData.candidates[0].content.parts[0].text;
         displayResult(text);
     }
 
@@ -111,14 +158,13 @@ document.addEventListener('DOMContentLoaded', () => {
         loading.classList.add('hidden');
         analysisResult.classList.remove('hidden');
         
-        // 마크다운 형태의 텍스트를 간단히 HTML로 변환하여 표시
+        // 마크다운 형식 텍스트를 HTML로 변환
         const formattedText = text
             .replace(/### (.*)\n/g, '<h2>$1</h2>')
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // 굵게 처리
             .replace(/\n/g, '<br>');
             
-        analysisResult.innerHTML = `
-            <div class="result-text">${formattedText}</div>
-        `;
+        analysisResult.innerHTML = `<div class="result-text">${formattedText}</div>`;
     }
 
     resetBtn.addEventListener('click', resetUI);
@@ -130,5 +176,6 @@ document.addEventListener('DOMContentLoaded', () => {
         fileInput.value = '';
         imagePreview.src = '';
         analysisResult.innerHTML = '';
+        analysisResult.classList.add('hidden');
     }
 });

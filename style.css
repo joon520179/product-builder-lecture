@@ -42,7 +42,7 @@ body {
 }
 
 .container {
-    max-width: 500px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 2rem 1rem;
 }
@@ -62,7 +62,8 @@ h1 { font-family: 'Gaegu', cursive; font-size: 3rem; color: #ff8a8f; margin-bott
     border-radius: 40px;
     padding: 2rem;
     box-shadow: 0 20px 40px rgba(255, 154, 158, 0.15);
-    margin-bottom: 2rem;
+    margin: 0 auto 2rem auto;
+    max-width: 500px;
 }
 
 .webcam-frame {
@@ -141,8 +142,120 @@ h1 { font-family: 'Gaegu', cursive; font-size: 3rem; color: #ff8a8f; margin-bott
 .guide-steps { display: flex; flex-direction: column; gap: 0.8rem; }
 .step { background: rgba(255,255,255,0.5); padding: 1rem; border-radius: 20px; font-size: 0.9rem; color: #888; }
 
-footer { text-align: center; color: #ccc; font-size: 0.8rem; }
-.footer-links a { color: #ccc; text-decoration: none; margin-bottom: 1rem; display: inline-block; }
+/* 추가된 콘텐츠 섹션 스타일 */
+.content-rich-section {
+    margin-top: 4rem;
+    background: white;
+    padding: 3rem;
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.content-block {
+    margin-bottom: 3rem;
+}
+
+.content-block h3 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.content-block p {
+    line-height: 1.8;
+    color: #555;
+    font-size: 1.1rem;
+}
+
+.face-type-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 1.5rem;
+}
+
+.face-type-item {
+    background: #f9f9fb;
+    padding: 1.5rem;
+    border-radius: 20px;
+    border: 1px solid #eee;
+    transition: transform 0.3s ease;
+}
+
+.face-type-item:hover {
+    transform: translateY(-5px);
+}
+
+.face-type-item h4 {
+    margin-bottom: 10px;
+    color: #444;
+}
+
+.face-type-item p {
+    font-size: 0.95rem;
+}
+
+/* FAQ 스타일 */
+.faq details {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.faq summary {
+    font-weight: 700;
+    color: #444;
+}
+
+.faq p {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #666;
+}
+
+/* 푸터 개선 */
+footer {
+    margin-top: 5rem;
+    padding: 3rem 0;
+    border-top: 1px solid #eee;
+    text-align: center;
+}
+
+.footer-links {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: #666;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.footer-links a:hover {
+    color: #ff8e8e;
+}
+
+.footer-note {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    color: #999;
+}
+
+@media (max-width: 768px) {
+    .content-rich-section {
+        padding: 2rem 1.5rem;
+    }
+}
 
 @media (max-width: 400px) {
     h1 { font-size: 2.5rem; }

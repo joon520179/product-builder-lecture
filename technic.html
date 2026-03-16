@@ -3,54 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>기술 및 교육 가치 (Technic) - AnimalFace AI</title>
+    <title>기술 및 교육 가치 (Technical Details) - AnimalFace AI</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        .page-container { max-width: 800px; margin: 0 auto; padding: 4rem 2rem; background: white; border-radius: 30px; margin-top: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        h1 { font-family: 'Gaegu'; color: #ff8a8f; margin-bottom: 2rem; }
+        .page-container { max-width: 850px; margin: 0 auto; padding: 4rem 2rem; background: white; border-radius: 30px; margin-top: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        h1 { font-family: 'Gaegu'; color: #ff8a8f; margin-bottom: 2rem; font-size: 2.5rem; }
         h2 { margin-top: 2.5rem; margin-bottom: 1.2rem; color: #333; border-left: 5px solid #ff9a9e; padding-left: 15px; }
-        h3 { margin-top: 1.5rem; color: #444; }
-        p, li { line-height: 1.9; color: #555; margin-bottom: 1.2rem; font-size: 1.05rem; }
-        .tech-card { background: #fdf2f2; padding: 1.5rem; border-radius: 20px; margin: 1.5rem 0; border: 1px solid #ffebeb; }
+        h3 { margin-top: 2rem; color: #444; font-weight: 800; }
+        p, li { line-height: 2; color: #4b5563; margin-bottom: 1.2rem; font-size: 1.05rem; }
+        .tech-card { background: #fdf2f2; padding: 2rem; border-radius: 20px; margin: 2rem 0; border: 1px solid #ffebeb; }
         .back-home { display: inline-block; margin-bottom: 2rem; color: #ff9a9e; text-decoration: none; font-weight: bold; }
-        strong { color: #333; }
+        strong { color: #111; }
+        code { background: #f3f4f6; padding: 0.2rem 0.4rem; border-radius: 4px; font-family: monospace; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="page-container">
             <a href="/" class="back-home">← 홈으로 돌아가기</a>
-            <h1>기술 및 이러닝 교육 가치</h1>
+            <h1>기술적 배경 및 교육적 가치</h1>
             
-            <p>AnimalFace AI는 단순한 오락용 도구를 넘어, 최신 인공지능 기술을 웹 환경에서 구현하고 이를 교육적으로 활용하는 **이러닝(E-learning)** 플랫폼으로서의 가치를 지향합니다.</p>
+            <p>AnimalFace AI는 최신 웹 기술과 인공지능 프레임워크를 결합하여 탄생했습니다. 본 페이지에서는 서비스의 핵심 기술과 이를 통해 전달하고자 하는 교육적 가치를 상세히 설명합니다.</p>
 
-            <h2>1. 인공지능 인식 기술 (AI Recognition)</h2>
+            <h2>1. 핵심 기술 스택 (Core Technology)</h2>
             <div class="tech-card">
-                <h3>TensorFlow.js 기반 딥러닝</h3>
-                <p>본 서비스는 Google의 오픈소스 머신러닝 라이브러리인 **TensorFlow.js**를 사용하여 구축되었습니다. 서버의 도움 없이 사용자의 웹 브라우저에서 직접 인공지능 모델을 실행하는 'On-device AI' 방식을 채택하고 있습니다.</p>
+                <h3>TensorFlow.js: 브라우저에서의 딥러닝</h3>
+                <p>본 서비스는 Google의 <strong>TensorFlow.js</strong>를 사용하여 구현되었습니다. 기존의 AI 서비스들이 무거운 연산을 위해 서버로 데이터를 전송해야 했던 것과 달리, TensorFlow.js는 사용자의 GPU/CPU 자원을 직접 활용하여 웹 브라우저 내에서 실시간 추론(Inference)을 수행합니다. 이를 통해 지연 시간(Latency)을 최소화하고 완벽한 개인정보 보호를 실현했습니다.</p>
             </div>
             
-            <h3>CNN(Convolutional Neural Networks) 모델</h3>
-            <p>얼굴 이미지 분석에는 이미지 인식에 최적화된 **합성곱 신경망(CNN)** 구조가 사용됩니다. 수만 장의 동물상 데이터를 학습한 모델이 이미지의 픽셀 데이터를 분석하여 눈, 코, 입의 배치와 형태적 특징을 추출하고, 이를 기반으로 가장 유사한 동물상 카테고리를 분류합니다.</p>
+            <h3>합성곱 신경망 (CNN, Convolutional Neural Networks)</h3>
+            <p>얼굴 분석의 핵심 알고리즘은 <strong>CNN</strong>입니다. 이는 인간의 시각 처리 방식을 모방한 신경망 구조로, 이미지의 픽셀 데이터를 계층적으로 분석합니다.
+            <ul>
+                <li><strong>Low-level Features:</strong> 이미지의 선, 에지(Edge) 등을 감지합니다.</li>
+                <li><strong>Mid-level Features:</strong> 눈, 코, 입과 같은 부분적인 모양을 형성합니다.</li>
+                <li><strong>High-level Features:</strong> 전체적인 얼굴형과 분위기를 파악하여 최종적으로 동물상 카테고리로 분류합니다.</li>
+            </ul>
+            </p>
 
-            <h2>2. 이러닝 기술 및 교육적 가치</h2>
-            <p>이 플랫폼은 인공지능의 원리를 일반인과 학생들이 쉽게 이해할 수 있도록 돕는 **에듀테크(Edutech)** 도구로 활용될 수 있습니다.</p>
+            <h2>2. 인공지능 학습 프로세스</h2>
+            <p>저희 모델은 <strong>전이 학습(Transfer Learning)</strong> 기법을 사용했습니다. 이미 수백만 장의 이미지로 학습된 베이스 모델(MobileNet 등) 위에, 수만 장의 고유한 동물상 데이터를 추가로 학습시켜 높은 정확도와 빠른 성능을 동시에 확보했습니다.</p>
+            
+            <div class="tech-card">
+                <p><strong>데이터 정제:</strong> 노이즈가 섞인 데이터를 필터링하고, 다양한 인종과 연령대의 데이터를 포함하여 편향성(Bias)을 최소화하기 위해 노력했습니다. AI 모델은 지속적으로 업데이트되며 성능이 개선되고 있습니다.</p>
+            </div>
+
+            <h2>3. 에듀테크로서의 비전</h2>
+            <p>AnimalFace AI는 단순한 재미를 넘어, 인공지능 교육을 위한 훌륭한 교재가 될 수 있습니다.</p>
             
             <ul>
-                <li><strong>인공지능 리터러시 함양:</strong> 사용자가 자신의 얼굴을 통해 AI가 어떻게 데이터를 인식하고 결과를 도출하는지 직접 체험하며 AI 리터러시를 높입니다.</li>
-                <li><strong>대화형 학습 경험:</strong> 웹캠을 이용한 실시간 인터랙션을 통해 정적인 텍스트 학습보다 훨씬 높은 학습 몰입도를 제공합니다.</li>
-                <li><strong>생물학적 분류 학습:</strong> 다양한 동물들의 외형적 특징을 인간의 얼굴형과 비교하며 동물학적 특성에 대한 관심을 유도합니다.</li>
+                <li><strong>AI 리터러시:</strong> 인공지능이 데이터를 어떻게 인식하고 판단하는지 직접 체험하며 디지털 문해력을 키울 수 있습니다.</li>
+                <li><strong>On-device AI 체험:</strong> 서버 없는 AI 환경을 직접 경험하며 최신 웹 기술의 트렌드를 이해합니다.</li>
+                <li><strong>인문학적 통찰:</strong> 기술이 인간의 감성과 연결될 때 어떤 시너지를 내는지 고민해볼 수 있는 기회를 제공합니다.</li>
             </ul>
 
-            <h2>3. 기술적 안전성과 프라이버시</h2>
-            <p>이러닝 환경에서 가장 중요한 요소 중 하나는 **데이터 보안**입니다. AnimalFace AI는 다음과 같은 기술적 조치를 통해 안전한 학습 환경을 보장합니다.</p>
-            
-            <div class="tech-card">
-                <p><strong>로컬 프로세싱:</strong> 사용자의 영상 데이터는 절대 서버로 전송되지 않습니다. 모든 계산은 사용자의 기기 메모리상에서만 이루어지며, 브라우저를 닫는 즉시 휘발됩니다. 이는 민감한 개인정보를 보호하면서도 빠른 반응 속도를 보장하는 고급 웹 기술입니다.</p>
-            </div>
+            <h2>4. 기술적 안전성 가이드라인</h2>
+            <p>저희는 <strong>'Privacy by Design'</strong> 원칙을 준수합니다. 소스 코드를 분석해보시면 알 수 있듯이, <code>webcam.play()</code>를 통해 획득한 영상 스트림은 오직 <code>tmImage.Webcam</code> 객체 내에서만 머무르며 외부 API 호출을 통해 전송되지 않습니다.</p>
 
-            <p style="margin-top: 4rem; color: #999;">AnimalFace AI는 더 나은 기술과 가치 있는 콘텐츠로 인공지능 대중화에 기여하겠습니다. 💖</p>
+            <p style="margin-top: 4rem; text-align: center; color: #9ca3af;">AnimalFace AI는 기술의 민주화와 올바른 AI 생태계 조성을 위해 계속해서 발전해 나가겠습니다. 💖</p>
         </div>
     </div>
 </body>

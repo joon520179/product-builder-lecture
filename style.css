@@ -136,6 +136,57 @@ h1 { font-family: 'Gaegu', cursive; font-size: 3rem; color: #ff8a8f; margin-bott
 .cat .p-bar-fill { background: var(--cat-color); }
 .p-val { font-weight: 800; font-size: 1.1rem; }
 
+/* Share Section */
+.share-section {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px dashed #ffd1d1;
+    text-align: center;
+}
+
+.share-title {
+    font-family: 'Gaegu', cursive;
+    font-size: 1.2rem;
+    color: #ff8a8f;
+    margin-bottom: 1rem;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.btn-share {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.btn-share:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+.btn-share .icon {
+    font-size: 1.5rem;
+    color: white;
+}
+
+.btn-share.kakao { background-color: #FEE500; }
+.btn-share.kakao .icon { color: #3C1E1E; }
+.btn-share.twitter { background-color: #000000; }
+.btn-share.facebook { background-color: #1877F2; }
+.btn-share.copy { background-color: #718096; }
+
 /* Guide Section */
 .guide-section { text-align: center; margin-bottom: 4rem; }
 .guide-section h3 { font-family: 'Gaegu'; font-size: 1.8rem; color: #aaa; margin-bottom: 1.5rem; }
@@ -254,6 +305,13 @@ footer {
 @media (max-width: 768px) {
     .content-rich-section {
         padding: 2rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .btn-share {
+        width: 45px;
+        height: 45px;
     }
 }
 

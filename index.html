@@ -87,6 +87,7 @@
     
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js" integrity="sha384-lTLG7vYUVo7H2yY93P6Q967y4m5n6n9n9n9n9n9n9n9n9n9n9n9n9n9n9n9n9n9n" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="bg-decoration">
@@ -164,11 +165,30 @@
                             <div class="percent-item cat">
                                 <span class="p-label">🐱 Kitty</span>
                                 <div class="p-bar-bg"><div id="cat-bar" class="p-bar-fill"></div></div>
-                                <span id="cat-percent" class="p-val">0%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                <div id="cat-percent" class="p-val">0%</div>
+                                </div>
+                                </div>
+
+                                <!-- 공유 섹션 추가 -->
+                                <div class="share-section">
+                                <p class="share-title">✨ 결과 자랑하고 친구들도 초대하기 ✨</p>
+                                <div class="share-buttons">
+                                <button onclick="shareKakao()" class="btn-share kakao" title="카카오톡 공유">
+                                    <span class="icon">💬</span>
+                                </button>
+                                <button onclick="shareTwitter()" class="btn-share twitter" title="트위터 공유">
+                                    <span class="icon">𝕏</span>
+                                </button>
+                                <button onclick="shareFacebook()" class="btn-share facebook" title="페이스북 공유">
+                                    <span class="icon">f</span>
+                                </button>
+                                <button onclick="copyLink()" class="btn-share copy" title="링크 복사">
+                                    <span class="icon">🔗</span>
+                                </button>
+                                </div>
+                                </div>
+                                </div>
+                                </section>
             </section>
 
             <!-- 정보 섹션 보강 -->

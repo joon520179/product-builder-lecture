@@ -53,7 +53,7 @@ const i18n = {
     },
     ja: {
         "main-title": "AI動物顔診断",
-        "main-subtitle": "あなたはどの動物に似ていますか？ 🐶🐱",
+        "main-subtitle": "あなたはどの動物에 似ていますか？ 🐶🐱",
         "security-msg": "🛡️ 写真はサーバーに送信されません。",
         "btn-start": "診断スタート! ✨",
         "btn-retry": "もう一度! 🐾",
@@ -64,15 +64,15 @@ const i18n = {
         "how-to-title": "🐾 使い方",
         "feature-analysis-title": "✨ なぜその結果に？ (観상分析)",
         "footer-privacy": "プライバシーポリシー",
-        "desc-dog": "あなたは親しみやすく、優しい印象の「犬顔」です！周囲に安心感を与え、誰からも好かれる魅力的な顔立ちをしています。 🐶",
-        "desc-cat": "あなたは洗練された、クールな魅力あふれる「猫顔」です！ミステリアスな雰囲気で、人々を惹きつける魅力を持っています。 🐱",
+        "desc-dog": "あなたは親しみやすく、優しい印象の「犬顔」です！周囲에 安心感を与え、誰からも好かれる魅力的な顔立ちをしています。 🐶",
+        "desc-cat": "あなたは洗練された、クールな魅力あふれる「猫顔」です！ミステリアスな雰囲気で、人々を惹きつける魅力を持っています. 🐱",
         "result-text": "あなたは{percent}% {animal}です!",
         "feat-dog-1": "丸くて優しい目元をしていますね！",
         "feat-dog-2": "柔らかな輪郭が親しみやすい印象を与えます。",
         "feat-dog-3": "明るい笑顔と可愛い雰囲気が溢れています！",
         "feat-cat-1": "目尻が少し上がった魅力的な目元！",
         "feat-cat-2": "シャープで洗練された顔立ちが際立っています。",
-        "feat-cat-3": "クールで都会的な雰囲気を醸し出しています！"
+        "feat-cat-3": "クールで都会的な雰囲기를 醸し出しています！"
     },
     zh: {
         "main-title": "AI 动物脸测试",
@@ -87,14 +87,14 @@ const i18n = {
         "how-to-title": "🐾 如何使用？",
         "feature-analysis-title": "✨ 为什么长得像它？ (面部分析)",
         "footer-privacy": "隐私政策",
-        "desc-dog": "你拥有一张超级可爱的犬系脸！散发着让人感到幸福的温和能量。 🐶",
-        "desc-cat": "你拥有一张充满魅力的猫系脸！高冷又神秘的气质真的太酷了。 🐱",
+        "desc-dog": "你拥有一张超级可爱的犬系脸！散发着让人感到幸福的温和能量. 🐶",
+        "desc-cat": "你拥有一张充满魅力的猫系脸！高冷又神秘的气质真的太酷了. 🐱",
         "result-text": "你是 {percent}% {animal}!",
         "feat-dog-1": "你拥有圆润且温和的眼神！",
-        "feat-dog-2": "柔和的下颌线给人一种亲切感。",
+        "feat-dog-2": "柔和的下颌线给人一种亲切感. ",
         "feat-dog-3": "散发着明亮又可爱的少女/少年感！",
         "feat-cat-1": "眼角微扬，拥有一双迷人的眼睛！",
-        "feat-cat-2": "清爽干练的面部轮廓非常出众。",
+        "feat-cat-2": "清爽干练的面部轮廓非常出众. ",
         "feat-cat-3": "流露出高冷又时髦的气质！"
     },
     es: {
@@ -300,6 +300,71 @@ function renderResult(className, percent) {
         li.innerText = i18n[currentLang][prefix + i];
         featureList.appendChild(li);
     }
+}
+
+// SNS Sharing Functions
+if (typeof Kakao !== 'undefined') {
+    try {
+        Kakao.init('617415170f3f6e8a4a50d24f0c620436'); 
+    } catch(e) { console.warn("Kakao init failed"); }
+}
+
+function shareKakao() {
+    const title = document.getElementById("result-title").innerText;
+    const url = window.location.href;
+    
+    if (Kakao.isInitialized()) {
+        Kakao.Share.sendDefault({
+            objectType: 'feed',
+            content: {
+                title: '나의 AI 동물상 결과는?',
+                description: title + '\n지금 바로 확인해보세요! 🐾',
+                imageUrl: 'https://product-builder-lecture-2ii.pages.dev/og-image.png',
+                link: {
+                    mobileWebUrl: url,
+                    webUrl: url,
+                },
+            },
+            buttons: [
+                {
+                    title: '테스트 하러가기',
+                    link: {
+                        mobileWebUrl: url,
+                        webUrl: url,
+                    },
+                },
+            ],
+        });
+    } else {
+        copyLink();
+    }
+}
+
+function shareTwitter() {
+    const title = document.getElementById("result-title").innerText;
+    const url = window.location.href;
+    const text = "나의 AI 동물상 결과: " + title + " 🐾\n지금 테스트해보세요! ✨\n#동물상테스트 #AI테스트 #AnimalFace\n";
+    window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(text) + "&url=" + encodeURIComponent(url));
+}
+
+function shareFacebook() {
+    const url = window.location.href;
+    window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url));
+}
+
+function copyLink() {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url).then(() => {
+        alert("링크가 복사되었습니다! 친구들에게 공유해보세요. 🐾");
+    }).catch(err => {
+        const t = document.createElement("textarea");
+        document.body.appendChild(t);
+        t.value = url;
+        t.select();
+        document.execCommand('copy');
+        document.body.removeChild(t);
+        alert("링크가 복사되었습니다! 🐾");
+    });
 }
 
 const savedLang = localStorage.getItem('animalFaceLang') || (i18n[navigator.language.split('-')[0]] ? navigator.language.split('-')[0] : 'ko');

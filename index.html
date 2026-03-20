@@ -140,7 +140,7 @@
                 <!-- 분석 결과 카드 -->
                 <div id="result-container" style="display: none;" class="result-card">
                     <div class="result-header">
-                        <div class="result-badge">Perfect Match! 💖</div>
+                        <div class="result-badge" data-i18n="result-badge">Perfect Match! 💖</div>
                         <h2 id="result-title">당신은 99% 강아지!</h2>
                     </div>
                     
@@ -166,44 +166,44 @@
                                 <span class="p-label">🐱 Kitty</span>
                                 <div class="p-bar-bg"><div id="cat-bar" class="p-bar-fill"></div></div>
                                 <div id="cat-percent" class="p-val">0%</div>
-                                </div>
-                                </div>
-
-                    <!-- 바이럴 공유 섹션 전면 개편 -->
-                    <div class="share-section-viral">
-                        <div class="viral-badge">🔥 실시간 인기 급상승! 🔥</div>
-                        <p class="share-cta">친구들은 어떤 동물일까요? 지금 바로 공유해보세요!</p>
-                        
-                        <div class="share-grid">
-                            <button onclick="copyLinkForIG()" class="btn-viral instagram" title="인스타그램 공유">
-                                <span class="v-icon">📸</span>
-                                <span class="v-label">Instagram</span>
-                            </button>
-                            <button onclick="shareTwitter()" class="btn-viral twitter" title="X(트위터) 공유">
-                                <span class="v-icon">𝕏</span>
-                                <span class="v-label">X</span>
-                            </button>
-                            <button onclick="shareReddit()" class="btn-viral reddit" title="레딧 공유">
-                                <span class="v-icon">🤖</span>
-                                <span class="v-label">Reddit</span>
-                            </button>
-                            <button onclick="shareFacebook()" class="btn-viral facebook" title="페이스북 공유">
-                                <span class="v-icon">f</span>
-                                <span class="v-label">Facebook</span>
-                            </button>
-                            <button onclick="shareTelegram()" class="btn-viral telegram" title="텔레그램 공유">
-                                <span class="v-icon">✈️</span>
-                                <span class="v-label">Telegram</span>
-                            </button>
-                            <button onclick="copyLink()" class="btn-viral copy-link" title="링크 복사">
-                                <span class="v-icon">🔗</span>
-                                <span class="v-label">Copy Link</span>
-                            </button>
+                            </div>
                         </div>
-                        <p class="share-note">* 인스타그램은 링크 복사 후 스토리/프로필에 공유해 주세요!</p>
                     </div>
                 </div>
             </section>
+
+            <!-- 바이럴 공유 섹션 (항상 노출되도록 위치 이동) -->
+            <section class="share-section-viral">
+                <div class="viral-badge" data-i18n="viral-badge">🔥 실시간 인기 급상승! 🔥</div>
+                <p class="share-cta" data-i18n="share-cta">친구들은 어떤 동물일까요? 지금 바로 공유해보세요!</p>
+                
+                <div class="share-grid">
+                    <button onclick="copyLinkForIG()" class="btn-viral instagram" title="Instagram">
+                        <span class="v-icon">📸</span>
+                        <span class="v-label">Instagram</span>
+                    </button>
+                    <button onclick="shareTwitter()" class="btn-viral twitter" title="X">
+                        <span class="v-icon">𝕏</span>
+                        <span class="v-label">X</span>
+                    </button>
+                    <button onclick="shareReddit()" class="btn-viral reddit" title="Reddit">
+                        <span class="v-icon">🤖</span>
+                        <span class="v-label">Reddit</span>
+                    </button>
+                    <button onclick="shareFacebook()" class="btn-viral facebook" title="Facebook">
+                        <span class="v-icon">f</span>
+                        <span class="v-label">Facebook</span>
+                    </button>
+                    <button onclick="shareTelegram()" class="btn-viral telegram" title="Telegram">
+                        <span class="v-icon">✈️</span>
+                        <span class="v-label">Telegram</span>
+                    </button>
+                    <button onclick="copyLink()" class="btn-viral copy-link" title="Copy Link">
+                        <span class="v-icon">🔗</span>
+                        <span class="v-label" data-i18n="btn-copy">Copy Link</span>
+                    </button>
+                </div>
+                <p class="share-note" data-i18n="share-note">* 인스타그램은 링크 복사 후 스토리/프로필에 공유해 주세요!</p>
             </section>
 
             <!-- 정보 섹션 보강 -->
@@ -212,15 +212,15 @@
                 <div class="guide-steps">
                     <div class="step">
                         <span class="step-num">1</span>
-                        <p>조명이 밝은 곳에서 카메라를 정면으로 응시해 주세요.</p>
+                        <p data-i18n="guide-step-1">조명이 밝은 곳에서 카메라를 정면으로 응시해 주세요.</p>
                     </div>
                     <div class="step">
                         <span class="step-num">2</span>
-                        <p>분석 시작 버튼을 누르고 3초 동안 대기합니다.</p>
+                        <p data-i18n="guide-step-2">분석 시작 버튼을 누르고 3초 동안 대기합니다.</p>
                     </div>
                     <div class="step">
                         <span class="step-num">3</span>
-                        <p>AI가 분석한 나의 동물상과 특징을 확인하세요!</p>
+                        <p data-i18n="guide-step-3">AI가 분석한 나의 동물상과 특징을 확인하세요!</p>
                     </div>
                 </div>
             </section>
@@ -228,9 +228,9 @@
             <!-- 풍부한 텍스트 콘텐츠 (AdSense 요구사항 반영) -->
             <section class="content-rich-section">
                 <div class="content-block intro">
-                    <h2>✨ AI 동물상 테스트: 당신의 얼굴에 숨겨진 비밀</h2>
-                    <p>
-                        'AnimalFace AI'는 단순한 재미를 넘어선 <strong>최첨단 인공지능 기술의 결정체</strong>입니다. 
+                    <h2 data-i18n="rich-intro-title">✨ AI 동물상 테스트: 당신의 얼굴에 숨겨진 비밀</h2>
+                    <p data-i18n="rich-intro-desc">
+                        'AnimalFace AI'는 단순한 재미를 넘어선 최첨단 인공지능 기술의 결정체입니다. 
                         구글의 TensorFlow.js 라이브러리를 활용하여 사용자의 얼굴 특징점을 정밀하게 추출하고, 
                         수만 건의 빅데이터와 비교 분석합니다. 여러분이 가진 독특한 분위기와 인상이 
                         어떤 동물과 가장 닮았는지 확인해보세요.
@@ -238,8 +238,8 @@
                 </div>
 
                 <div class="content-block details">
-                    <h3>🔍 왜 인공지능(AI)인가요?</h3>
-                    <p>
+                    <h3 data-i18n="rich-why-ai-title">🔍 왜 인공지능(AI)인가요?</h3>
+                    <p data-i18n="rich-why-ai-desc">
                         기존의 간단한 퀴즈 방식과 달리, 본 서비스는 실시간 이미지 인식 기술인 CNN(Convolutional Neural Networks)을 사용합니다. 
                         눈의 각도, 코의 너비, 턱선의 흐름 등 미세한 차이를 AI가 학습된 데이터를 바탕으로 정량화하여 결과를 도출합니다. 
                         이는 현대 관상학의 데이터를 디지털화하여 분석하는 것과 유사한 경험을 제공합니다.
@@ -247,54 +247,54 @@
                 </div>
 
                 <div class="content-block face-types">
-                    <h3>🐱 대표적인 동물상 분석 가이드</h3>
+                    <h3 data-i18n="rich-guide-title">🐱 대표적인 동물상 분석 가이드</h3>
                     <div class="face-type-grid">
                         <article class="face-type-item">
-                            <h4>🐕 강아지상 (Doggy Face)</h4>
-                            <p>전체적으로 둥근 얼굴형과 선한 눈매가 특징입니다. 상대방에게 신뢰감과 친근함을 주는 인상으로, 웃을 때 입꼬리가 살짝 올라가는 모습이 매력적입니다.</p>
+                            <h4 data-i18n="face-dog-title">🐕 강아지상 (Doggy Face)</h4>
+                            <p data-i18n="face-dog-desc">전체적으로 둥근 얼굴형과 선한 눈매가 특징입니다. 상대방에게 신뢰감과 친근함을 주는 인상으로, 웃을 때 입꼬리가 살짝 올라가는 모습이 매력적입니다.</p>
                         </article>
                         <article class="face-type-item">
-                            <h4>🐈 고양이상 (Cat Face)</h4>
-                            <p>세련되고 도도한 분위기가 느껴지는 얼굴형입니다. 눈꼬리가 살짝 올라가 있으며, 뚜렷한 이목구비가 시크한 매력을 완성합니다.</p>
+                            <h4 data-i18n="face-cat-title">🐈 고양이상 (Cat Face)</h4>
+                            <p data-i18n="face-cat-desc">세련되고 도도한 분위기가 느껴지는 얼굴형입니다. 눈꼬리가 살짝 올라가 있으며, 뚜렷한 이목구비가 시크한 매력을 완성합니다.</p>
                         </article>
                         <article class="face-type-item">
-                            <h4>🐰 토끼상 (Rabbit Face)</h4>
-                            <p>맑고 큰 눈망울과 귀여운 앞니가 돋보이는 스타일입니다. 동안 인상의 대표주자로, 밝고 긍정적인 에너지를 풍깁니다.</p>
+                            <h4 data-i18n="face-rabbit-title">🐰 토끼상 (Rabbit Face)</h4>
+                            <p data-i18n="face-rabbit-desc">맑고 큰 눈망울과 귀여운 앞니가 돋보이는 스타일입니다. 동안 인상의 대표주자로, 밝고 긍정적인 에너지를 풍깁니다.</p>
                         </article>
                         <article class="face-type-item">
-                            <h4>🦊 여우상 (Fox Face)</h4>
-                            <p>턱선이 갸름하고 눈매가 가로로 긴 신비로운 스타일입니다. 지적이면서도 매혹적인 분위기를 동시에 가지고 있습니다.</p>
+                            <h4 data-i18n="face-fox-title">🦊 여우상 (Fox Face)</h4>
+                            <p data-i18n="face-fox-desc">턱선이 갸름하고 눈매가 가로로 긴 신비로운 스타일입니다. 지적이면서도 매혹적인 분위기를 동시에 가지고 있습니다.</p>
                         </article>
                     </div>
                 </div>
 
                 <div class="content-block articles">
-                    <h3>📚 인공지능과 관상 이야기</h3>
+                    <h3 data-i18n="rich-story-title">📚 인공지능과 관상 이야기</h3>
                     <div class="article-list">
                         <div class="mini-article">
-                            <h4>AI가 사람의 얼굴을 인식하는 방법</h4>
-                            <p>AI는 수백 개의 랜드마크를 통해 얼굴의 구조를 파악합니다. 이는 머신러닝의 핵심인 패턴 인식 기술 덕분입니다.</p>
+                            <h4 data-i18n="story-1-title">AI가 사람의 얼굴을 인식하는 방법</h4>
+                            <p data-i18n="story-1-desc">AI는 수백 개의 랜드마크를 통해 얼굴의 구조를 파악합니다. 이는 머신러닝의 핵심인 패턴 인식 기술 덕분입니다.</p>
                         </div>
                         <div class="mini-article">
-                            <h4>동물상으로 보는 성격 테스트의 유래</h4>
-                            <p>인상을 동물에 비유하는 것은 오래전부터 동서양을 막론하고 인간의 특징을 직관적으로 이해하는 방법 중 하나였습니다.</p>
+                            <h4 data-i18n="story-2-title">동물상으로 보는 성격 테스트의 유래</h4>
+                            <p data-i18n="story-2-desc">인상을 동물에 비유하는 것은 오래전부터 동서양을 막론하고 인간의 특징을 직관적으로 이해하는 방법 중 하나였습니다.</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="content-block faq">
-                    <h3>❓ 자주 묻는 질문 (FAQ)</h3>
+                    <h3 data-i18n="faq-title">❓ 자주 묻는 질문 (FAQ)</h3>
                     <details open>
-                        <summary>제 개인정보(사진)는 안전한가요?</summary>
-                        <p>본 서비스는 개인정보 보호를 최우선으로 합니다. 촬영된 영상은 사용자의 브라우저 내에서만 처리되며, 분석 즉시 삭제됩니다. 서버로는 단 1바이트의 이미지 데이터도 전송되지 않습니다.</p>
+                        <summary data-i18n="faq-1-q">제 개인정보(사진)는 안전한가요?</summary>
+                        <p data-i18n="faq-1-a">본 서비스는 개인정보 보호를 최우선으로 합니다. 촬영된 영상은 사용자의 브라우저 내에서만 처리되며, 분석 즉시 삭제됩니다. 서버로는 단 1바이트의 이미지 데이터도 전송되지 않습니다.</p>
                     </details>
                     <details>
-                        <summary>결과의 정확도는 어느 정도인가요?</summary>
-                        <p>수만 장의 학습 데이터를 기반으로 하지만, 조명이나 각도에 따라 차이가 있을 수 있습니다. 가장 자연스러운 정면 사진으로 테스트하는 것을 권장합니다.</p>
+                        <summary data-i18n="faq-2-q">결과의 정확도는 어느 정도인가요?</summary>
+                        <p data-i18n="faq-2-a">수만 장의 학습 데이터를 기반으로 하지만, 조명이나 각도에 따라 차이가 있을 수 있습니다. 가장 자연스러운 정면 사진으로 테스트하는 것을 권장합니다.</p>
                     </details>
                     <details>
-                        <summary>서비스 이용료가 있나요?</summary>
-                        <p>아니요, 본 서비스는 모든 이용자에게 100% 무료로 제공됩니다. 광고 수익을 통해 지속적인 서비스 업데이트와 인공지능 모델 개선을 진행하고 있습니다.</p>
+                        <summary data-i18n="faq-3-q">서비스 이용료가 있나요?</summary>
+                        <p data-i18n="faq-3-a">아니요, 본 서비스는 모든 이용자에게 100% 무료로 제공됩니다. 광고 수익을 통해 지속적인 서비스 업데이트와 인공지능 모델 개선을 진행하고 있습니다.</p>
                     </details>
                 </div>
             </section>
@@ -302,14 +302,14 @@
 
         <footer>
             <div class="footer-links">
-                <a href="/about.html">소개 (About)</a>
-                <a href="/technic.html">기술 및 교육 가치 (Technic)</a>
+                <a href="/about.html" data-i18n="footer-about">소개 (About)</a>
+                <a href="/technic.html" data-i18n="footer-technic">기술 및 교육 가치 (Technic)</a>
                 <a href="/privacy.html" data-i18n="footer-privacy">개인정보처리방침</a>
-                <a href="/terms.html">이용약관</a>
-                <a href="/contact.html">문의 (Contact)</a>
+                <a href="/terms.html" data-i18n="footer-terms">이용약관</a>
+                <a href="/contact.html" data-i18n="footer-contact">문의 (Contact)</a>
             </div>
-            <p class="copyright">© 2024 AnimalFace AI. All rights reserved. 💖</p>
-            <p class="footer-note">우리는 인공지능 기술이 세상에 즐거움을 줄 수 있다고 믿습니다.</p>
+            <p class="copyright" data-i18n="footer-copyright">© 2024 AnimalFace AI. All rights reserved. 💖</p>
+            <p class="footer-note" data-i18n="footer-note">우리는 인공지능 기술이 세상에 즐거움을 줄 수 있다고 믿습니다.</p>
         </footer>
     </div>
 

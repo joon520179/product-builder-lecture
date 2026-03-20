@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://animalface.ai/sitemap.xml
+Sitemap: https://product-builder-lecture-2ii.pages.dev/sitemap.xml

@@ -54,7 +54,7 @@ const i18n = {
     ja: {
         "main-title": "AI動物顔診断",
         "main-subtitle": "あなたはどの動物에 似ていますか？ 🐶🐱",
-        "security-msg": "🛡️ 写真はサーバーに送信されません。",
+        "security-msg": "🛡️ 写真はサーバー에 送信されません。",
         "btn-start": "診断スタート! ✨",
         "btn-retry": "もう一度! 🐾",
         "loading-msg": "AIがあなたの顔を分析中...",
@@ -64,15 +64,15 @@ const i18n = {
         "how-to-title": "🐾 使い方",
         "feature-analysis-title": "✨ なぜその結果に？ (観상分析)",
         "footer-privacy": "プライバシーポリシー",
-        "desc-dog": "あなたは親しみやすく、優しい印象の「犬顔」です！周囲에 安心感を与え、誰からも好かれる魅力的な顔立ちをしています。 🐶",
-        "desc-cat": "あなたは洗練された、クールな魅力あふれる「猫顔」です！ミステリアスな雰囲気で、人々を惹きつける魅力を持っています. 🐱",
+        "desc-dog": "あなたは親しみやすく、優しい印象の「犬顔」です！周囲에 安心感を与え、誰からも好かれる魅力적인 顔立ちをしています。 🐶",
+        "desc-cat": "あなたは洗練された、クールな魅力あふれる「猫顔」です！ミ스테리어스한 雰囲気で、人々を惹きつける魅力を持っています. 🐱",
         "result-text": "あなたは{percent}% {animal}です!",
         "feat-dog-1": "丸くて優しい目元をしていますね！",
         "feat-dog-2": "柔らかな輪郭が親しみやすい印象を与えます。",
-        "feat-dog-3": "明るい笑顔と可愛い雰囲気が溢れています！",
-        "feat-cat-1": "目尻が少し上がった魅力的な目元！",
+        "feat-dog-3": "明るい笑顔と可愛い雰囲기가 溢れています！",
+        "feat-cat-1": "目尻が少し上がった魅力적인 目元！",
         "feat-cat-2": "シャープで洗練された顔立ちが際立っています。",
-        "feat-cat-3": "クールで都会的な雰囲기를 醸し出しています！"
+        "feat-cat-3": "クールで都会적인 雰囲気기를 醸し出しています！"
     },
     zh: {
         "main-title": "AI 动物脸测试",
@@ -156,7 +156,7 @@ const i18n = {
         "how-to-title": "🐾 Wie benutzt man es?",
         "feature-analysis-title": "✨ Warum siehst du so aus?",
         "footer-privacy": "Datenschutz",
-        "desc-dog": "Du hast ein reizendes Hundegesicht! Du strahlst gütige Energie aus. 🐶",
+        "desc-dog": "Du hast ein reizendes Hundegesicht! Du strahlst gütige 에너지 aus. 🐶",
         "desc-cat": "Du hast ein charmantes Katzengesicht! Du hast eine schicke Ausstrahlung. 🐱",
         "result-text": "Du bist zu {percent}% ein {animal}!",
         "feat-dog-1": "Du hast runde und freundlich aussehende Augen!",
@@ -302,68 +302,47 @@ function renderResult(className, percent) {
     }
 }
 
-// SNS Sharing Functions
-if (typeof Kakao !== 'undefined') {
-    try {
-        Kakao.init('617415170f3f6e8a4a50d24f0c620436'); 
-    } catch(e) { console.warn("Kakao init failed"); }
-}
+// --- Viral SNS Sharing Functions ---
 
-function shareKakao() {
+function getShareText() {
     const title = document.getElementById("result-title").innerText;
-    const url = window.location.href;
-    
-    if (Kakao.isInitialized()) {
-        Kakao.Share.sendDefault({
-            objectType: 'feed',
-            content: {
-                title: '나의 AI 동물상 결과는?',
-                description: title + '\n지금 바로 확인해보세요! 🐾',
-                imageUrl: 'https://product-builder-lecture-2ii.pages.dev/og-image.png',
-                link: {
-                    mobileWebUrl: url,
-                    webUrl: url,
-                },
-            },
-            buttons: [
-                {
-                    title: '테스트 하러가기',
-                    link: {
-                        mobileWebUrl: url,
-                        webUrl: url,
-                    },
-                },
-            ],
-        });
-    } else {
-        copyLink();
-    }
+    return `나의 AI 동물상 결과: ${title} 🐾\n당신은 어떤 동물과 닮았나요? 지금 바로 확인해보세요! ✨\n\n#동물상테스트 #AI테스트 #얼굴분석 #AnimalFace`;
 }
 
 function shareTwitter() {
-    const title = document.getElementById("result-title").innerText;
+    const text = getShareText();
     const url = window.location.href;
-    const text = "나의 AI 동물상 결과: " + title + " 🐾\n지금 테스트해보세요! ✨\n#동물상테스트 #AI테스트 #AnimalFace\n";
-    window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(text) + "&url=" + encodeURIComponent(url));
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`);
 }
 
 function shareFacebook() {
     const url = window.location.href;
-    window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url));
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`);
+}
+
+function shareReddit() {
+    const url = window.location.href;
+    const title = "나의 AI 동물상 테스트 결과 🐾";
+    window.open(`https://www.reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`);
+}
+
+function shareTelegram() {
+    const text = getShareText();
+    const url = window.location.href;
+    window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`);
+}
+
+function copyLinkForIG() {
+    const url = window.location.href;
+    navigator.clipboard.writeText(url).then(() => {
+        alert("링크가 복사되었습니다!\n인스타그램 스토리나 프로필에 링크를 추가해 친구들에게 알려주세요! 📸");
+    });
 }
 
 function copyLink() {
     const url = window.location.href;
     navigator.clipboard.writeText(url).then(() => {
-        alert("링크가 복사되었습니다! 친구들에게 공유해보세요. 🐾");
-    }).catch(err => {
-        const t = document.createElement("textarea");
-        document.body.appendChild(t);
-        t.value = url;
-        t.select();
-        document.execCommand('copy');
-        document.body.removeChild(t);
-        alert("링크가 복사되었습니다! 🐾");
+        alert("링크가 복사되었습니다! 🔗");
     });
 }
 

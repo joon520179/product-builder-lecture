@@ -169,26 +169,41 @@
                                 </div>
                                 </div>
 
-                                <!-- 공유 섹션 추가 -->
-                                <div class="share-section">
-                                <p class="share-title">✨ 결과 자랑하고 친구들도 초대하기 ✨</p>
-                                <div class="share-buttons">
-                                <button onclick="shareKakao()" class="btn-share kakao" title="카카오톡 공유">
-                                    <span class="icon">💬</span>
-                                </button>
-                                <button onclick="shareTwitter()" class="btn-share twitter" title="트위터 공유">
-                                    <span class="icon">𝕏</span>
-                                </button>
-                                <button onclick="shareFacebook()" class="btn-share facebook" title="페이스북 공유">
-                                    <span class="icon">f</span>
-                                </button>
-                                <button onclick="copyLink()" class="btn-share copy" title="링크 복사">
-                                    <span class="icon">🔗</span>
-                                </button>
-                                </div>
-                                </div>
-                                </div>
-                                </section>
+                    <!-- 바이럴 공유 섹션 전면 개편 -->
+                    <div class="share-section-viral">
+                        <div class="viral-badge">🔥 실시간 인기 급상승! 🔥</div>
+                        <p class="share-cta">친구들은 어떤 동물일까요? 지금 바로 공유해보세요!</p>
+                        
+                        <div class="share-grid">
+                            <button onclick="copyLinkForIG()" class="btn-viral instagram" title="인스타그램 공유">
+                                <span class="v-icon">📸</span>
+                                <span class="v-label">Instagram</span>
+                            </button>
+                            <button onclick="shareTwitter()" class="btn-viral twitter" title="X(트위터) 공유">
+                                <span class="v-icon">𝕏</span>
+                                <span class="v-label">X</span>
+                            </button>
+                            <button onclick="shareReddit()" class="btn-viral reddit" title="레딧 공유">
+                                <span class="v-icon">🤖</span>
+                                <span class="v-label">Reddit</span>
+                            </button>
+                            <button onclick="shareFacebook()" class="btn-viral facebook" title="페이스북 공유">
+                                <span class="v-icon">f</span>
+                                <span class="v-label">Facebook</span>
+                            </button>
+                            <button onclick="shareTelegram()" class="btn-viral telegram" title="텔레그램 공유">
+                                <span class="v-icon">✈️</span>
+                                <span class="v-label">Telegram</span>
+                            </button>
+                            <button onclick="copyLink()" class="btn-viral copy-link" title="링크 복사">
+                                <span class="v-icon">🔗</span>
+                                <span class="v-label">Copy Link</span>
+                            </button>
+                        </div>
+                        <p class="share-note">* 인스타그램은 링크 복사 후 스토리/프로필에 공유해 주세요!</p>
+                    </div>
+                </div>
+            </section>
             </section>
 
             <!-- 정보 섹션 보강 -->
